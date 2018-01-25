@@ -1,4 +1,4 @@
-This uses the CONLL-U evaluation script available at https://github.com/ufal/conll2017 to make a comparison regarding accuracy between UDPipe models and Spacy models which are trained on the same treebanks. 
+This repository uses the CONLL-U evaluation script available at https://github.com/ufal/conll2017 to make a comparison regarding accuracy between UDPipe models and Spacy models which are trained on the same treebanks. 
 
 - It does this for French (UD_French-Sequoia treebank), Dutch (UD_Dutch treebank), Spanish (UD_Spanish-Ancora treebank), Portuguese (UD_Portuguese treebank) and English (UD_English treebank). 
 - The udpipe and spacy models were trained on the same treebanks except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (uses the Ontonotes treebank). All models were trained on the training set of each of the respective treebanks, while evalution shown below is on the left out test set.
@@ -7,6 +7,16 @@ This uses the CONLL-U evaluation script available at https://github.com/ufal/con
 
 Below the output is reported from the CONLL17 evaluation scripts for the udpipe and spacy models. 
 The most used results are the one from AligndAcc which indicates Gold accuracies which means that if we know the tokenisation, how good would the parts-of-speech tagging, morphological feature tagging and dependency parsing be.
+
+## Conclusion 
+
+You can look at the numbers below but when looking at the metrics below `AligndAcc`, they seem to give the following conclusion:
+
+- French (UD_French-Sequoia treebank) udpipe gives better accuracies than spacy regarding all accuracy metrics
+- Dutch (UD_Dutch treebank): it seems like the treebank spacy used when building the model changed too much to make a statement
+- Spanish (UD_Spanish-Ancora treebank): udpipe gives better accuracies than spacy on parts of speech tagging and lemmatisation while they are on par regarding dependencies
+- Portuguese (UD_Portuguese Bosque treebank): udpipe gives better accuracies than spacy regarding all accuracy metrics
+- English (UD_English treebank): udpipe gives better accuracies than spacy regarding universal and penn-treebank based parts of speech tagging but the spacy model was built on the Ontonotes treebank while the udpipe model was trained on the training set of the UD_English treebank so this might as well been caused by general treebank differences
 
 # French Sequioa
 
