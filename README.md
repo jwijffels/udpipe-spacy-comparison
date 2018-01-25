@@ -6,6 +6,7 @@ This uses the CONLL-U evaluation script available at http://universaldependencie
 - Code was run on 25/01/2018. 
 
 Below the output is reported from the CONLL17 evaluation scripts for the udpipe and spacy models. 
+The most used results are the one from AligndAcc which indicates Gold accuracies which means that if we know the tokenisation, how good would the parts-of-speech tagging, morphological feature tagging and dependency parsing be.
 
 # French Sequioa
 
