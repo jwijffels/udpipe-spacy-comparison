@@ -1,8 +1,8 @@
 This repository uses the CONLL-U evaluation script available at https://github.com/ufal/conll2017 to make a comparison regarding accuracy between UDPipe models and Spacy models which are trained on the same treebanks. 
 
-- It does this for French (UD_French-Sequoia treebank), Dutch (UD_Dutch treebank), Spanish (UD_Spanish-Ancora treebank), Portuguese (UD_Portuguese treebank) and English (UD_English treebank). 
-- The udpipe and spacy models were trained on the same treebanks except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (uses the Ontonotes treebank). All models were trained on the training set of each of the respective treebanks, while evalution shown below is on the left out test set.
-- Training which was used for the udpipe models is openly available at https://github.com/bnosac/udpipe.models.ud and were run on 2018-01-11. For the spacy models, we took the models currently available for download as in python -m spacy download es (spaCy Version: 2.0.5).
+- It does this for French (UD_French-Sequoia treebank), Dutch (UD_Dutch treebank), Spanish (UD_Spanish-Ancora treebank), Portuguese (UD_Portuguese treebank), Italian (UD_Italian treebank) and English (UD_English treebank). 
+- These udpipe and spacy models were trained on the same treebanks except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (which was trained on the Ontonotes treebank). All models were trained on the training set of each of the respective treebanks, while evalution shown below is executed on the left out test set.
+- Training which was used for the udpipe models is openly available at https://github.com/bnosac/udpipe.models.ud and were run on 2018-01-11 except for Italian where we used the model provided by the udpipe community available at https://github.com/jwijffels/udpipe.models.ud.2.0 (built on 2017-08-01). For the spacy models, we took the models currently available for download as in python -m spacy download es (spaCy Version: 2.0.5).
 - Code was run on 2018-01-25. Just run the R script udpipe-spacy-comparison.R if you want to reproduce this.
 
 Below the output is reported from the CONLL17 evaluation scripts for the udpipe and spacy models. 
@@ -16,6 +16,7 @@ You can look at the numbers below but when looking at the metrics below `AligndA
 - Dutch (UD_Dutch treebank): it seems like the treebank spacy used when building the model changed too much to make a statement
 - Spanish (UD_Spanish-Ancora treebank): udpipe gives better accuracies than spacy on parts of speech tagging and lemmatisation while they are on par regarding dependencies
 - Portuguese (UD_Portuguese Bosque treebank): udpipe gives better accuracies than spacy regarding all accuracy metrics
+- Italian (UD_Italian treebank): udpipe gives better accuracies than spacy regarding all accuracy metrics
 - English (UD_English treebank): udpipe gives better accuracies than spacy regarding universal and penn-treebank based parts of speech tagging but the spacy model was built on the Ontonotes treebank while the udpipe model was trained on the training set of the UD_English treebank so this might as well been caused by general treebank differences
 
 # French Sequioa
@@ -194,6 +195,50 @@ LAS        |     68.10 |     64.99 |     66.51 |     75.39
 CLAS       |     65.28 |     68.14 |     66.68 |     69.30
 ```
 
+# Italian
+
+Evaluation data from https://github.com/UniversalDependencies/UD_Italian
+
+Notes: had to recode full text to ASCII to make evaluation work on my Windows machine
+
+## udpipe
+
+```
+> system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_udpipe.conllu")
+Metrics    | Precision |    Recall |  F1 Score | AligndAcc
+-----------+-----------+-----------+-----------+-----------
+Tokens     |     99.87 |     99.82 |     99.85 |
+Sentences  |     95.93 |     97.93 |     96.92 |
+Words      |     99.78 |     99.76 |     99.77 |
+UPOS       |     94.57 |     94.55 |     94.56 |     94.77
+XPOS       |     94.33 |     94.31 |     94.32 |     94.53
+Feats      |     93.62 |     93.61 |     93.62 |     93.83
+AllTags    |     92.57 |     92.55 |     92.56 |     92.77
+Lemmas     |     95.05 |     95.03 |     95.04 |     95.26
+UAS        |     84.29 |     84.28 |     84.28 |     84.48
+LAS        |     79.87 |     79.85 |     79.86 |     80.04
+CLAS       |     72.53 |     72.43 |     72.48 |     72.64
+```
+
+## spacy
+
+```
+> system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_spacy.conllu")
+Metrics    | Precision |    Recall |  F1 Score | AligndAcc
+-----------+-----------+-----------+-----------+-----------
+Tokens     |     97.10 |     94.66 |     95.86 |
+Sentences  |     94.95 |     97.51 |     96.21 |
+Words      |     90.39 |     81.89 |     85.93 |
+UPOS       |     80.52 |     72.95 |     76.55 |     89.09
+XPOS       |     83.46 |     75.61 |     79.34 |     92.33
+Feats      |     83.71 |     75.84 |     79.58 |     92.61
+AllTags    |     78.98 |     71.55 |     75.08 |     87.37
+Lemmas     |     70.17 |     63.57 |     66.71 |     77.63
+UAS        |     66.66 |     60.39 |     63.37 |     73.75
+LAS        |     61.48 |     55.70 |     58.45 |     68.02
+CLAS       |     54.21 |     56.31 |     55.24 |     60.78
+```
+
 # English (mark udpipe trained on UD_English, spacy was trained on Ontonotes)
 
 Evaluation data from https://github.com/UniversalDependencies/UD_English
@@ -242,10 +287,6 @@ LAS        |     41.78 |     42.65 |     42.21 |     43.42
 CLAS       |     35.96 |     42.64 |     39.01 |     43.35
 ```
 
-# Italian
-
-Not executed as license seems to be incorrect from spacy: https://github.com/explosion/spaCy/issues/1865
-
 # German
 
-Not executed as the spacy model is built on a different treebank, which will give similar issues as encountered in the English evaluation.
+Not executed as the spacy model is built on a different treebank, which will give similar remarks as encountered in the English evaluation.
