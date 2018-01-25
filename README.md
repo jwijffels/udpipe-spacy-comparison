@@ -184,6 +184,7 @@ Notes:
 
 - udpipe was trained on UD_English while spacy was trained on OntoNotes which is a different treebank than the udpipe model which makes comparison tricky
 - spacy does not return morphological features + it seems that dependency relationships do not follow the same format as universaldependencies.org giving probably false evaluation metrics on UAS and LAS
+- This all indicates that probably only the metrics on upos and xpos are relevant for comparison
 
 ## udpipe
 
