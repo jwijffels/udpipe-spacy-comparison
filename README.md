@@ -180,6 +180,7 @@ LAS        |     68.10 |     64.99 |     66.51 |     75.39
 Evaluation data from https://github.com/UniversalDependencies/UD_English
 
 Notes:
+
 - udpipe was trained on UD_English while spacy was trained on OntoNotes which is a different treebank than the udpipe model which makes comparison tricky
 - spacy does not return morphological features + it seems that dependency relationships do not follow the same format as universaldependencies.org giving probably false evaluation metrics on UAS and LAS
 
