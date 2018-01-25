@@ -1,7 +1,7 @@
 This uses the CONLL-U evaluation script available at https://github.com/ufal/conll2017 to make a comparison regarding accuracy between UDPipe models and Spacy models which are trained on the same treebanks. 
 
 - It does this for French (UD_French-Sequoia treebank), Dutch (UD_Dutch treebank), Spanish (UD_Spanish-Ancora treebank), Portuguese (UD_Portuguese treebank) and English (UD_English treebank). 
-- The udpipe and spacy models were trained on the same treebanks except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (uses the Ontonotes treebank).
+- The udpipe and spacy models were trained on the same treebanks except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (uses the Ontonotes treebank). All models were trained on the training set of each of the respective treebanks, while evalution shown below is on the left out test set.
 - Training which was used for the udpipe models is openly available at https://github.com/bnosac/udpipe.models.ud and were run on 2018-01-11. For the spacy models, we took the models currently available for download as in python -m spacy download es (spaCy Version: 2.0.5).
 - Code was run on 2018-01-25. Just run the R script udpipe-spacy-comparison.R if you want to reproduce this.
 
