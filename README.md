@@ -3,7 +3,7 @@ This uses the CONLL-U evaluation script available at https://github.com/ufal/con
 - It does this for French (UD_French-Sequoia treebank), Dutch (UD_Dutch treebank), Spanish (UD_Spanish-Ancora treebank), Portuguese (UD_Portuguese treebank) and English (UD_English treebank). 
 - The udpipe and spacy models were trained on the same treebanks except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (uses the Ontonotes treebank).
 - Training which was used for the udpipe models is openly available at https://github.com/bnosac/udpipe.models.ud and were run on 2018-01-11. For the spacy models, we took the models currently available for download as in python -m spacy download es (spaCy Version: 2.0.5).
-- Code was run on 2018-01-25. 
+- Code was run on 2018-01-25. Just run the R script udpipe-spacy-comparison.R if you want to reproduce this.
 
 Below the output is reported from the CONLL17 evaluation scripts for the udpipe and spacy models. 
 The most used results are the one from AligndAcc which indicates Gold accuracies which means that if we know the tokenisation, how good would the parts-of-speech tagging, morphological feature tagging and dependency parsing be.
