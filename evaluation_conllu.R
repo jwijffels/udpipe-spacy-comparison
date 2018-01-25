@@ -2,10 +2,6 @@ library(udpipe)
 library(spacyr)
 library(data.table)
 
-## Get evaluation script provided by universaldependencies.org
-download.file(url = "http://universaldependencies.org/conll17/eval.zip", destfile = "eval.zip")
-unzip("eval.zip", exdir = getwd())
-
 ##############################################################################################
 ## UD_French-Sequoia
 ##  + Evaluation data from https://github.com/UniversalDependencies/UD_French-Sequoia
