@@ -8,6 +8,22 @@ This repository uses the CONLL-U evaluation script available at https://github.c
 Below the output is reported from the CONLL17 evaluation scripts for the udpipe and spacy models. 
 The most used results are the one from AligndAcc which indicate Gold accuracies which means that if we know the tokenisation, how good would the parts-of-speech tagging, morphological feature tagging and dependency parsing be.
 
+## Overall comparison graphs
+
+The following shows the graphs comparing the UDPipe and spaCy models using the evaluation script used in the CoNLL 2017 Shared Task. 
+It shows the word-aligned accuracies of the different NLP tasks and also the F1 measure.
+
+### Aligned Accuracies
+
+![](results-alignedaccuracy1.png)
+![](results-alignedaccuracy2.png)
+
+### F1 measure
+
+![](results-f1_1.png)
+![](results-f1_2.png)
+![](results-f1_3.png)
+
 ## Conclusion 
 
 You can look at the numbers below but when looking at the metrics below `AligndAcc`, they seem to give the following conclusion:
