@@ -10,6 +10,11 @@ library(data.table)
 ##############################################################################################
 download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_French-Sequoia/master/fr_sequoia-ud-test.conllu", 
               destfile = "gold.conllu")
+download.file(url = "https://github.com/UniversalDependencies/UD_French-Sequoia/archive/r2.0-test.zip",
+              destfile = "r2.0-test.zip")
+unzip("r2.0-test.zip", list = TRUE)
+unzip("r2.0-test.zip", files = "UD_French-Sequoia-r2.0-test/fr_sequoia-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
+file.copy("fr_sequoia-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
 gold <- udpipe_read_conllu("gold.conllu")
 sentences <- unique(gold$sentence)
@@ -20,6 +25,7 @@ sentences <- gsub("# text = ", "", sentences)
 
 ## Annotation with UDPipe
 ud_model <- udpipe_download_model(language = "french-sequoia", udpipe_model_repo = "bnosac/udpipe.models.ud")
+ud_model <- udpipe_download_model(language = "french-sequoia", udpipe_model_repo = "jwijffels/udpipe.models.ud.2.0")
 ud_model <- udpipe_load_model(ud_model$file)
 anno <- udpipe_annotate(ud_model, sentences)
 cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
@@ -46,10 +52,14 @@ system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_s
 ## UD_Dutch
 ##  + Evaluation data from https://github.com/UniversalDependencies/UD_Dutch
 ##  + udpipe + spacy were trained on the same data
-##  + Note: spacy seems to have completely changed the content of xpos or was it built on a historical conllu file?
 ##############################################################################################
-download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_Dutch/master/nl-ud-dev.conllu", 
+download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_Dutch/master/nl-ud-test.conllu", 
               destfile = "gold.conllu")
+download.file(url = "https://github.com/UniversalDependencies/UD_Dutch/archive/r2.0-test.zip",
+              destfile = "r2.0-test.zip")
+unzip("r2.0-test.zip", list = TRUE)
+unzip("r2.0-test.zip", files = "UD_Dutch-r2.0-test/nl-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
+file.copy("nl-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
 gold <- udpipe_read_conllu("gold.conllu")
 sentences <- unique(gold$sentence)
@@ -60,6 +70,7 @@ sentences <- gsub("# text = ", "", sentences)
 
 ## Annotation with UDPipe
 ud_model <- udpipe_download_model(language = "dutch", udpipe_model_repo = "bnosac/udpipe.models.ud")
+ud_model <- udpipe_download_model(language = "dutch", udpipe_model_repo = "jwijffels/udpipe.models.ud.2.0")
 ud_model <- udpipe_load_model(ud_model$file)
 anno <- udpipe_annotate(ud_model, sentences)
 cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
@@ -67,7 +78,7 @@ x <- as.data.frame(anno)
 
 ## Annotation with Spacy
 spacy_initialize(model = "nl", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
-names(sentences) <- sentences
+names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))
 x$sentence <- x$doc_id
@@ -91,6 +102,11 @@ system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_s
 ##############################################################################################
 download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_Spanish-Ancora/master/es_ancora-ud-test.conllu", 
               destfile = "gold.conllu")
+download.file(url = "https://github.com/UniversalDependencies/UD_Spanish-Ancora/archive/r2.0-test.zip",
+              destfile = "r2.0-test.zip")
+unzip("r2.0-test.zip", list = TRUE)
+unzip("r2.0-test.zip", files = "UD_Spanish-AnCora-r2.0-test/es_ancora-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
+file.copy("es_ancora-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
 gold <- udpipe_read_conllu("gold.conllu")
 sentences <- unique(gold$sentence)
@@ -101,6 +117,7 @@ sentences <- gsub("# text = ", "", sentences)
 
 ## Annotation with UDPipe
 ud_model <- udpipe_download_model(language = "spanish-ancora", udpipe_model_repo = "bnosac/udpipe.models.ud")
+ud_model <- udpipe_download_model(language = "spanish-ancora", udpipe_model_repo = "jwijffels/udpipe.models.ud.2.0")
 ud_model <- udpipe_load_model(ud_model$file)
 anno <- udpipe_annotate(ud_model, sentences)
 cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
@@ -133,6 +150,11 @@ system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_s
 ##############################################################################################
 download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_Portuguese/master/pt-ud-test.conllu", 
               destfile = "gold.conllu")
+download.file(url = "https://github.com/UniversalDependencies/UD_Portuguese/archive/r2.0-test.zip",
+              destfile = "r2.0-test.zip")
+unzip("r2.0-test.zip", list = TRUE)
+unzip("r2.0-test.zip", files = "UD_Portuguese-r2.0-test/pt-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
+file.copy("pt-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
 gold <- udpipe_read_conllu("gold.conllu")
 sentences <- unique(gold$sentence)
@@ -143,6 +165,7 @@ sentences <- gsub("# text = ", "", sentences)
 
 ## Annotation with UDPipe
 ud_model <- udpipe_download_model(language = "portuguese", udpipe_model_repo = "bnosac/udpipe.models.ud")
+ud_model <- udpipe_download_model(language = "portuguese", udpipe_model_repo = "jwijffels/udpipe.models.ud.2.0")
 ud_model <- udpipe_load_model(ud_model$file)
 anno <- udpipe_annotate(ud_model, sentences)
 cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
@@ -220,6 +243,11 @@ system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_s
 ##############################################################################################
 download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_Italian/master/it-ud-test.conllu", 
               destfile = "gold.conllu")
+download.file(url = "https://github.com/UniversalDependencies/UD_Italian/archive/r2.0-test.zip",
+              destfile = "r2.0-test.zip")
+unzip("r2.0-test.zip", list = TRUE)
+unzip("r2.0-test.zip", files = "UD_Italian-r2.0-test/it-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
+file.copy("it-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
 ## having problems with the output of spacyr which does unexpected things on strange characters, make them ASCII for now - it is Italian so that won't matter
 gold <- readLines("gold.conllu", encoding = "UTF-8")
@@ -234,7 +262,7 @@ sentences <- grep(pattern = "# text =", sentences, value=TRUE)
 sentences <- gsub("# text = ", "", sentences)
 
 ## Annotation with UDPipe
-ud_model <- udpipe_download_model(language = "italian")
+ud_model <- udpipe_download_model(language = "italian", udpipe_model_repo = "jwijffels/udpipe.models.ud.2.0")
 ud_model <- udpipe_load_model(ud_model$file)
 anno <- udpipe_annotate(ud_model, sentences)
 cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
