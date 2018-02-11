@@ -27,7 +27,7 @@ xyplot(alignedacc ~ treebank | metric, groups = model,
        data = subset(x, metric %in% c("UPOS", "XPOS", "Feats", "Lemmas")),
        scales = list(x = list(rot = 45, alternating = FALSE), y = list(relation = "free")),
        auto.key = list(space = "right", lines = TRUE), type = "b", pch = 20,
-       par.settings = simpleTheme(col=c("red", "blue")),
+       par.settings = simpleTheme(col=c("red", "blue")), layout = c(4, 1),
        ylab = "Word-aligned 'gold' accuracy", xlab = "Universal Dependencies Treebank v2.0",
        main = "spaCy/UDPipe accuracy comparison\nParts of Speech tagging, Morphological Features & Lemmatisation")
 
@@ -35,7 +35,7 @@ xyplot(alignedacc ~ treebank | metric, groups = model,
        data = subset(x, metric %in% c("UAS", "LAS", "CLAS") & treebank != "English"),
        scales = list(x = list(rot = 45, alternating = FALSE)),
        auto.key = list(space = "right", lines = TRUE), type = "b",
-       par.settings = simpleTheme(col=c("red", "blue")),
+       par.settings = simpleTheme(col=c("red", "blue")), layout = c(3, 1),
        ylab = "Word-aligned 'gold' accuracy", xlab = "Universal Dependencies Treebank v2.0",
        main = "spaCy/UDPipe accuracy comparison\nDependency Parsing")
 
@@ -46,7 +46,7 @@ xyplot(f1 ~ treebank | metric, groups = model,
        data = subset(x, metric %in% c("Tokens", "Words", "Sentences")),
        scales = list(x = list(rot = 45, alternating = FALSE), y = list(relation = "free")),
        auto.key = list(space = "right", lines = TRUE), type = "b", pch = 20,
-       par.settings = simpleTheme(col=c("red", "blue")),
+       par.settings = simpleTheme(col=c("red", "blue")), layout = c(3, 1),
        ylab = "F1", xlab = "Universal Dependencies Treebank v2.0",
        main = "spaCy/UDPipe F1 comparison\nTokenisation")
 
@@ -54,7 +54,7 @@ xyplot(f1 ~ treebank | metric, groups = model,
        data = subset(x, metric %in% c("UPOS", "XPOS", "Feats", "Lemmas")),
        scales = list(x = list(rot = 45, alternating = FALSE), y = list(relation = "free")),
        auto.key = list(space = "right", lines = TRUE), type = "b", pch = 20,
-       par.settings = simpleTheme(col=c("red", "blue")),
+       par.settings = simpleTheme(col=c("red", "blue")), layout = c(4, 1),
        ylab = "F1", xlab = "Universal Dependencies Treebank v2.0",
        main = "spaCy/UDPipe F1 comparison\nParts of Speech tagging, Morphological Features & Lemmatisation")
 
@@ -63,6 +63,6 @@ xyplot(f1 ~ treebank | metric, groups = model,
        data = subset(x, metric %in% c("UAS", "LAS", "CLAS") & treebank != "English"),
        scales = list(x = list(rot = 45, alternating = FALSE)),
        auto.key = list(space = "right", lines = TRUE), type = "b",
-       par.settings = simpleTheme(col=c("red", "blue")),
+       par.settings = simpleTheme(col=c("red", "blue")), layout = c(3, 1),
        ylab = "F1", xlab = "Universal Dependencies Treebank v2.0",
        main = "spaCy/UDPipe F1 comparison\nDependency Parsing")

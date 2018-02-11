@@ -32,7 +32,7 @@ cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
 x <- as.data.frame(anno)
 
 ## Annotation with Spacy
-spacy_initialize(model = "fr", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
+spacy_initialize(model = "fr")
 names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))
@@ -77,7 +77,7 @@ cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
 x <- as.data.frame(anno)
 
 ## Annotation with Spacy
-spacy_initialize(model = "nl", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
+spacy_initialize(model = "nl")
 names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))
@@ -124,7 +124,7 @@ cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
 x <- as.data.frame(anno)
 
 ## Annotation with Spacy
-spacy_initialize(model = "es", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
+spacy_initialize(model = "es")
 names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))
@@ -172,7 +172,7 @@ cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
 x <- as.data.frame(anno)
 
 ## Annotation with Spacy
-spacy_initialize(model = "pt", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
+spacy_initialize(model = "pt")
 names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))
@@ -195,13 +195,18 @@ system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_s
 ##  + udpipe was trained on UD_English while spacy was trained on OntoNotes which is a different treebank than the udpipe model which makes comparison tricky
 ##  + Note: spacy does not return morphological features + it seems that dependency relationships do not follow the same format as universaldependencies.org
 ##############################################################################################
-download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_English/master/en-ud-dev.conllu", 
+download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_English/master/en-ud-test.conllu", 
               destfile = "gold.conllu")
+download.file(url = "https://github.com/UniversalDependencies/UD_English/archive/r2.0-test.zip",
+              destfile = "r2.0-test.zip")
+unzip("r2.0-test.zip", list = TRUE)
+unzip("r2.0-test.zip", files = "UD_English-r2.0-test/en-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
+file.copy("en-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
-## having problems with the output of spacyr which does unexpected things on strange characters, make them ASCII for now - it is English so that won't matter
 gold <- readLines("gold.conllu", encoding = "UTF-8")
-gold <- iconv(gold, from = "UTF-8", to = "ASCII//TRANSLIT", sub = "?")
-gold <- gsub("\\\\", "//", gold)
+gold <- gold[-c(
+  grep("newsgroup-groups.google.com_n3td3v_e874a1e5eb995654_ENG_20060120_052200-0011", gold):
+  (grep("newsgroup-groups.google.com_n3td3v_e874a1e5eb995654_ENG_20060120_052200-0012", gold)-1))]
 writeLines(gold, con = file("gold.conllu", encoding = "UTF-8"))
 gold <- udpipe_read_conllu("gold.conllu")
 sentences <- unique(gold$sentence)
@@ -212,13 +217,14 @@ sentences <- gsub("# text = ", "", sentences)
 
 ## Annotation with UDPipe
 ud_model <- udpipe_download_model(language = "english", udpipe_model_repo = "bnosac/udpipe.models.ud")
+ud_model <- udpipe_download_model(language = "english", udpipe_model_repo = "jwijffels/udpipe.models.ud.2.0")
 ud_model <- udpipe_load_model(ud_model$file)
 anno <- udpipe_annotate(ud_model, sentences)
 cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
 x <- as.data.frame(anno)
 
 ## Annotation with Spacy
-spacy_initialize(model = "en", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
+spacy_initialize(model = "en")
 names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))
@@ -227,6 +233,7 @@ x$xpos <- x$tag
 x$upos <- x$pos
 x$dep_rel <- txt_recode(x$dep_rel, from = "ROOT", to = "root")
 x$head_token_id <- ifelse(x$dep_rel == "root", 0, x$head_token_id)
+x$lemma <- ifelse(x$lemma %in% "-PRON-", x$token, x$lemma)
 cat(as_conllu(x), file = file("predictions_spacy.conllu", encoding = "UTF-8"))
 spacy_finalize()
 
@@ -238,7 +245,6 @@ system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_s
 ## UD_Italian
 ##  + Evaluation data from https://github.com/UniversalDependencies/UD_Italian
 ##  + udpipe + spacy were trained on the same data
-##  + Changed everything to ASCII
 ##  + Note that the license seems to be incorrect from spacy: https://github.com/explosion/spaCy/issues/1865
 ##############################################################################################
 download.file(url = "https://raw.githubusercontent.com/UniversalDependencies/UD_Italian/master/it-ud-test.conllu", 
@@ -249,11 +255,6 @@ unzip("r2.0-test.zip", list = TRUE)
 unzip("r2.0-test.zip", files = "UD_Italian-r2.0-test/it-ud-test.conllu", exdir = getwd(), junkpaths = TRUE)
 file.copy("it-ud-test.conllu", "gold.conllu", overwrite = TRUE)
 
-## having problems with the output of spacyr which does unexpected things on strange characters, make them ASCII for now - it is Italian so that won't matter
-gold <- readLines("gold.conllu", encoding = "UTF-8")
-gold <- iconv(gold, from = "UTF-8", to = "ASCII//TRANSLIT", sub = "?")
-gold <- gsub("\\\\", "//", gold)
-writeLines(gold, con = file("gold.conllu", encoding = "UTF-8"))
 gold <- udpipe_read_conllu("gold.conllu")
 sentences <- unique(gold$sentence)
 sentences <- rle(gold$sentence)$values
@@ -269,7 +270,7 @@ cat(anno$conllu, file = file("predictions_udpipe.conllu", encoding = "UTF-8"))
 x <- as.data.frame(anno)
 
 ## Annotation with Spacy
-spacy_initialize(model = "it", python_executable = "C:/Users/Jan/Anaconda3/python.exe")
+spacy_initialize(model = "it")
 names(sentences) <- sprintf("%s %s", seq_along(sentences), sentences)
 x <- spacy_parse(sentences, pos = TRUE, tag = TRUE, lemma = TRUE, dependency = TRUE, entity = FALSE)
 sum(duplicated(x[, c("doc_id", "sentence_id", "token_id")]))

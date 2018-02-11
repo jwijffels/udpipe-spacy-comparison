@@ -2,8 +2,8 @@ This repository uses the CONLL-U evaluation script available at https://github.c
 
 - It does this evaluation for French (UD_French-Sequoia treebank), Dutch (UD_Dutch treebank), Spanish (UD_Spanish-Ancora treebank), Portuguese (UD_Portuguese treebank), Italian (UD_Italian treebank) and English (UD_English treebank)
 - The udpipe and spacy models used for evaluation were trained on the same treebanks from www.universaldependencies.org except for English. For English the udpipe models are constructed on a different treebank (UD_English) than the model which was built by spacy (which was trained on the Ontonotes treebank). All models were trained on the training set of each of the respective treebanks, while evalution shown below is executed on the left out test set.
-- For the spacy models, we took the models currently available for download as in python -m spacy download es (spaCy Version: 2.0.5), these were build on version 2.0 of the UD treebanks. For the udpipe models, the official models provided by the udpipe authors which were trained on 2017-08-01 on version 2.0-test of the treebanks were used (models available at https://github.com/jwijffels/udpipe.models.ud.2.0). Except for English, for which we built a model on 2018-01-11 on the newest version 2.1 of the UD_English treebank (code for this is openly available at https://github.com/bnosac/udpipe.models.ud). 
-- Code was run on 2018-02-07. Just run the R script udpipe-spacy-comparison.R if you want to reproduce this.
+- For the spacy models, we took the models currently available for download as in python -m spacy download es` (spaCy Version: 2.0.7), these were build on version 2.0 of the UD treebanks. For the udpipe models, the official models provided by the udpipe authors which were trained on 2017-08-01 on version 2.0-test of the treebanks were used (models available at https://github.com/jwijffels/udpipe.models.ud.2.0). Except for English, for which we built a model on 2018-01-11 on the newest version 2.1 of the UD_English treebank (code for this is openly available at https://github.com/bnosac/udpipe.models.ud). 
+- Code was run on 2018-02-11. Just run the R script udpipe-spacy-comparison.R if you want to reproduce this. Code run on a Ubuntu Linux machine with LANG nl_BE.UTF-8.
 
 Below the output is reported from the CONLL17 evaluation scripts for the udpipe and spacy models. 
 The most used results are the one from AligndAcc which indicate Gold accuracies which means that if we know the tokenisation, how good would the parts-of-speech tagging, morphological feature tagging and dependency parsing be.
@@ -215,7 +215,7 @@ CLAS       |     65.28 |     68.14 |     66.68 |     69.30
 
 Evaluation data from https://github.com/UniversalDependencies/UD_Italian release 2.0-test
 
-Notes: had to recode full text to ASCII to make evaluation work on my Windows machine
+Notes: None
 
 ## udpipe
 
@@ -223,17 +223,17 @@ Notes: had to recode full text to ASCII to make evaluation work on my Windows ma
 > system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_udpipe.conllu")
 Metrics    | Precision |    Recall |  F1 Score | AligndAcc
 -----------+-----------+-----------+-----------+-----------
-Tokens     |     99.87 |     99.82 |     99.85 |
-Sentences  |     95.93 |     97.93 |     96.92 |
-Words      |     99.78 |     99.76 |     99.77 |
-UPOS       |     94.61 |     94.60 |     94.60 |     94.82
-XPOS       |     94.37 |     94.36 |     94.36 |     94.58
-Feats      |     93.66 |     93.65 |     93.65 |     93.87
-AllTags    |     92.62 |     92.60 |     92.61 |     92.82
-Lemmas     |     95.08 |     95.07 |     95.07 |     95.29
-UAS        |     84.26 |     84.25 |     84.25 |     84.45
-LAS        |     79.88 |     79.87 |     79.88 |     80.06
-CLAS       |     72.59 |     72.47 |     72.53 |     72.68
+Tokens     |     99.91 |     99.92 |     99.91 |
+Sentences  |     96.73 |     98.34 |     97.53 |
+Words      |     99.82 |     99.85 |     99.83 |
+UPOS       |     97.21 |     97.24 |     97.22 |     97.38
+XPOS       |     97.01 |     97.03 |     97.02 |     97.18
+Feats      |     96.99 |     97.01 |     97.00 |     97.16
+AllTags    |     96.10 |     96.13 |     96.12 |     96.28
+Lemmas     |     97.28 |     97.31 |     97.30 |     97.46
+UAS        |     88.90 |     88.92 |     88.91 |     89.06
+LAS        |     86.20 |     86.22 |     86.21 |     86.36
+CLAS       |     79.81 |     79.49 |     79.65 |     79.67
 ```
 
 ## spacy
@@ -243,16 +243,16 @@ CLAS       |     72.59 |     72.47 |     72.53 |     72.68
 Metrics    | Precision |    Recall |  F1 Score | AligndAcc
 -----------+-----------+-----------+-----------+-----------
 Tokens     |     97.10 |     94.66 |     95.86 |
-Sentences  |     94.95 |     97.51 |     96.21 |
+Sentences  |     95.74 |     97.93 |     96.82 |
 Words      |     90.39 |     81.89 |     85.93 |
-UPOS       |     80.60 |     73.02 |     76.62 |     89.17
-XPOS       |     83.53 |     75.67 |     79.41 |     92.42
-Feats      |     83.78 |     75.90 |     79.64 |     92.68
-AllTags    |     79.05 |     71.61 |     75.15 |     87.46
-Lemmas     |     70.27 |     63.66 |     66.80 |     77.74
-UAS        |     66.61 |     60.34 |     63.32 |     73.69
-LAS        |     61.44 |     55.66 |     58.41 |     67.97
-CLAS       |     54.15 |     56.24 |     55.18 |     60.70
+UPOS       |     82.75 |     74.96 |     78.66 |     91.55
+XPOS       |     86.39 |     78.27 |     82.13 |     95.58
+Feats      |     86.96 |     78.78 |     82.66 |     96.20
+AllTags    |     81.78 |     74.09 |     77.75 |     90.48
+Lemmas     |     71.73 |     64.98 |     68.19 |     79.36
+UAS        |     70.98 |     64.30 |     67.47 |     78.52
+LAS        |     67.31 |     60.98 |     63.99 |     74.47
+CLAS       |     59.85 |     61.85 |     60.84 |     66.76
 ```
 
 # English (mark udpipe trained on UD_English, spacy was trained on Ontonotes)
@@ -264,6 +264,7 @@ Notes:
 - udpipe was trained on UD_English while spacy was trained on OntoNotes which is a different treebank than the udpipe model which makes comparison tricky
 - spacy does not return morphological features + it seems that dependency relationships do not follow the same format as universaldependencies.org giving probably false evaluation metrics on UAS and LAS
 - This all indicates that probably only the metrics on upos and xpos are relevant for comparison
+- also removed sentence newsgroup-groups.google.com_n3td3v_e874a1e5eb995654_ENG_20060120_052200-0011 from the test dataset as it contained non-UTF-8 characters
 
 ## udpipe
 
@@ -271,17 +272,17 @@ Notes:
 > system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_udpipe.conllu")
 Metrics    | Precision |    Recall |  F1 Score | AligndAcc
 -----------+-----------+-----------+-----------+-----------
-Tokens     |     99.13 |     98.91 |     99.02 |
-Sentences  |     94.57 |     97.35 |     95.94 |
-Words      |     99.13 |     98.91 |     99.02 |
-UPOS       |     93.76 |     93.55 |     93.65 |     94.58
-XPOS       |     93.11 |     92.91 |     93.01 |     93.93
-Feats      |     94.56 |     94.35 |     94.46 |     95.39
-AllTags    |     91.69 |     91.49 |     91.59 |     92.50
-Lemmas     |     96.20 |     95.99 |     96.10 |     97.05
-UAS        |     82.39 |     82.21 |     82.30 |     83.12
-LAS        |     79.07 |     78.90 |     78.99 |     79.77
-CLAS       |     75.55 |     74.91 |     75.23 |     75.72
+Tokens     |     99.15 |     98.94 |     99.05 |
+Sentences  |     93.49 |     96.82 |     95.13 |
+Words      |     99.15 |     98.94 |     99.05 |
+UPOS       |     93.77 |     93.58 |     93.68 |     94.58
+XPOS       |     93.15 |     92.95 |     93.05 |     93.95
+Feats      |     94.59 |     94.40 |     94.50 |     95.41
+AllTags    |     91.81 |     91.61 |     91.71 |     92.59
+Lemmas     |     96.16 |     95.96 |     96.06 |     96.99
+UAS        |     83.09 |     82.91 |     83.00 |     83.80
+LAS        |     79.97 |     79.80 |     79.88 |     80.65
+CLAS       |     76.20 |     75.95 |     76.07 |     76.81
 ```
 
 ## spacy
@@ -290,17 +291,17 @@ CLAS       |     75.55 |     74.91 |     75.23 |     75.72
 > system("python evaluation_script/conll17_ud_eval.py -v gold.conllu predictions_spacy.conllu")
 Metrics    | Precision |    Recall |  F1 Score | AligndAcc
 -----------+-----------+-----------+-----------+-----------
-Tokens     |     96.21 |     98.23 |     97.21 |
-Sentences  |     89.37 |     94.96 |     92.08 |
-Words      |     96.21 |     98.23 |     97.21 |
-UPOS       |     79.89 |     81.56 |     80.71 |     83.03
-XPOS       |     89.43 |     91.30 |     90.35 |     92.95
-Feats      |     32.39 |     33.07 |     32.73 |     33.67
-AllTags    |     27.38 |     27.95 |     27.67 |     28.46
-Lemmas     |     81.55 |     83.26 |     82.39 |     84.76
-UAS        |     55.58 |     56.74 |     56.16 |     57.77
-LAS        |     41.78 |     42.65 |     42.21 |     43.42
-CLAS       |     35.96 |     42.64 |     39.01 |     43.35
+Tokens     |     96.71 |     98.26 |     97.48 |
+Sentences  |     87.70 |     94.46 |     90.96 |
+Words      |     96.71 |     98.26 |     97.48 |
+UPOS       |     79.93 |     81.21 |     80.56 |     82.65
+XPOS       |     89.60 |     91.04 |     90.31 |     92.65
+Feats      |     32.51 |     33.03 |     32.77 |     33.62
+AllTags    |     27.65 |     28.09 |     27.87 |     28.59
+Lemmas     |     85.79 |     87.17 |     86.48 |     88.72
+UAS        |     56.00 |     56.90 |     56.44 |     57.90
+LAS        |     42.46 |     43.15 |     42.80 |     43.91
+CLAS       |     36.69 |     43.30 |     39.72 |     44.14
 ```
 
 # German
